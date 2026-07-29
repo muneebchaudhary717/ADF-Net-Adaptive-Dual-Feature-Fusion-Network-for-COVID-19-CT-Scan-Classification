@@ -33,7 +33,8 @@ def main():
         val_dir=val_dir,
         test_dir=test_dir,
         batch_size=args.batch_size,
-        target_size=(224, 224)
+        target_size=(224, 224),
+        dataset_dir=args.dataset_dir
     )
 
     num_classes = test_gen.num_classes
