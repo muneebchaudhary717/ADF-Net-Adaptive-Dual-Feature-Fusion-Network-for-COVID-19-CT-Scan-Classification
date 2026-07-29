@@ -8,6 +8,7 @@ from utils.visualization import plot_confusion_matrix, plot_roc_curve, plot_prec
 
 # Make sure Custom Layer is registered during model loading
 from models.adaptive_fusion import AdaptiveWeightedFusion
+from models.cbam import ChannelAttention, SpatialAttention
 
 def main():
     parser = argparse.ArgumentParser(description="Evaluate Trained ADF-Net Model on Test Data")
@@ -44,7 +45,11 @@ def main():
     print(f"Loading trained ADF-Net model from: {args.model_path}...")
     model = tf.keras.models.load_model(
         args.model_path,
-        custom_objects={'AdaptiveWeightedFusion': AdaptiveWeightedFusion}
+        custom_objects={
+            'AdaptiveWeightedFusion': AdaptiveWeightedFusion,
+            'ChannelAttention': ChannelAttention,
+            'SpatialAttention': SpatialAttention
+        }
     )
 
     print("Running inference on test dataset...")

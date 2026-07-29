@@ -8,6 +8,7 @@ from utils.preprocessing import load_and_preprocess_image
 
 # Make sure Custom Layer is mapped during model loading
 from models.adaptive_fusion import AdaptiveWeightedFusion
+from models.cbam import ChannelAttention, SpatialAttention
 
 def main():
     parser = argparse.ArgumentParser(description="Predict COVID-19 CT Scan Class for a Single Image")
@@ -36,7 +37,11 @@ def main():
     print(f"Loading trained ADF-Net model from: {args.model_path}...")
     model = tf.keras.models.load_model(
         args.model_path,
-        custom_objects={'AdaptiveWeightedFusion': AdaptiveWeightedFusion}
+        custom_objects={
+            'AdaptiveWeightedFusion': AdaptiveWeightedFusion,
+            'ChannelAttention': ChannelAttention,
+            'SpatialAttention': SpatialAttention
+        }
     )
 
     # 3. Predict probabilities
